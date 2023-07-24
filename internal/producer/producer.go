@@ -27,7 +27,12 @@ func Producer() {
 	if err != nil {
 		panic(err)
 	}
-	msg := &sarama.ProducerMessage{Topic: "topic-1", Value: sarama.ByteEncoder(jsonBody)}
+	msg := &sarama.ProducerMessage{
+		Topic:     "topic-1",
+		Key:       sarama.StringEncoder("id-1"),
+		Value:     sarama.ByteEncoder(jsonBody),
+		Partition: int32(0),
+	}
 	_, _, err = producer.SendMessage(msg)
 	if err != nil {
 		panic(err)
